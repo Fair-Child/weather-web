@@ -9,7 +9,6 @@ if (!location) {
     console.log('Please provide a location!')
 } else {
     forecastLocation(location, (error, data) => {
-
         if (error) {
             return console.log(error)
         } else {
@@ -17,7 +16,6 @@ if (!location) {
             console.log('Country:', data.country)
             console.log('Temperature:', data.temp)
         }
-    
     })
 }
 
