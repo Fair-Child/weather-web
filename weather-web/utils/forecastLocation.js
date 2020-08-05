@@ -10,10 +10,14 @@ const forecastLocation = (location, callback) => {
         } else if (response.body.error) {
             callback('Unable to find location. Try another search.', undefined)
         } else {
-            callback(undefined, response.body.current.weather_descriptions[0] + ' ' + response.body.current.temperature + ' degrees.')
+            callback(undefined, {
+                location: response.body.location.name,
+                country: response.body.location.country,
+                temp: response.body.current.weather_descriptions[0] + ' ' + response.body.current.temperature + ' degrees.'
+            
+            })
         }
     })
-
 }
 
 module.exports = forecastLocation

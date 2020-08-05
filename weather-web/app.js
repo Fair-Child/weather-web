@@ -3,25 +3,40 @@ const geocode = require('./utils/geocode')
 const forecast = require('./utils/forecast')
 const forecastLocation = require('./utils/forecastLocation')
 
+const location = process.argv[2]
 
+if (!location) {
+    console.log('Please provide a location!')
+} else {
+    forecastLocation(location, (error, data) => {
 
+        if (error) {
+            return console.log(error)
+        } else {
+            console.log('Location:', data.location)
+            console.log('Country:', data.country)
+            console.log('Temperature:', data.temp)
+        }
+    
+    })
+}
 
 // first, retrieve the latitude and longitude of location, then pass to the forecast
-// geocode('Vancouver', (error, data) => {
+// geocode(location, (error, geoData) => {
 
 //     if (error) {
 //         return console.log(error)
 //     } else {
 //         console.log('Error', error)
-//         console.log('Data', data)
+//         console.log('Data', geoData)
 
-//         forecast(data.latitude, data.longitude, (error, data) => {
+//         forecast(geoData.latitude, geoData.longitude, (error, forecastData) => {
             
 //             if (error) {
 //                 return console.log(error)
 //             } else {
-//                 console.log('Error', error)
-//                 console.log('Data', data)
+//                 console.log(geoData.location)
+//                 console.log(forecastData)
 //             }
             
 //         })
@@ -29,14 +44,15 @@ const forecastLocation = require('./utils/forecastLocation')
 // })
 
 // or, use the location directly pass into the forecastLocation function
-forecastLocation('Tokyo', (error, data) => {
+// forecastLocation(location, (error, data) => {
 
-    if (error) {
-        return console.log(error)
-    } else {
-        console.log('Error', error)
-        console.log('Data', data)
-    }
+//     if (error) {
+//         return console.log(error)
+//     } else {
+//         console.log('Location:', data.location)
+//         console.log('Country:', data.country)
+//         console.log('Temperature:', data.temp)
+//     }
 
-})
+// })
 
