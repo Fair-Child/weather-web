@@ -7,3 +7,5 @@ to run the app
 4. run "node src/app.js" in command line tool
 5. on your browser, type in "http://localhost:3000/", clicke the enter
 6. great! now you can check the weather for any location around the world!
+
+or, go to https://brent-weather-web.herokuapp.com/ to experience my weather web!
