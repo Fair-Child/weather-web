@@ -3,6 +3,7 @@ const express = require('express')
 const hbs = require('hbs')
 const geocode = require('./utils/geocode')
 const forecast = require('./utils/forecast')
+const forecastLocation = require('./utils/forecastLocation')
 
 const app = express()
 
@@ -22,25 +23,53 @@ app.use(express.static(publicDirectoryPath))
 app.get('', (req, res) => {
     res.render('index', {
         title: 'Weather',
-        name: 'Andrew Mead'
+        name: 'Brent Liang'
     })
 })
 
 app.get('/about', (req, res) => {
     res.render('about', {
         title: 'About Me',
-        name: 'Andrew Mead'
+        name: 'Brent Liang'
     })
 })
 
 app.get('/help', (req, res) => {
     res.render('help', {
-        helpText: 'This is some helpful text.',
+        helpText: 'Help page',
         title: 'Help',
-        name: 'Andrew Mead'
+        name: 'Brent Liang'
     })
 })
 
+// by using forecast.js file
+// app.get('/weather', (req, res) => {
+//     if (!req.query.address) {
+//         return res.send({
+//             error: 'You must provide an address!'
+//         })
+//     }
+
+//     geocode(req.query.address, (error, { latitude, longitude, location } = {}) => {
+//         if (error) {
+//             return res.send({ error })
+//         }
+
+//         forecast(latitude, longitude, (error, forecastData) => {
+//             if (error) {
+//                 return res.send({ error })
+//             }
+
+//             res.send({
+//                 forecast: forecastData,
+//                 location,
+//                 address: req.query.address
+//             })
+//         })
+//     })
+// })
+
+// by using forecastLocation.js file
 app.get('/weather', (req, res) => {
     if (!req.query.address) {
         return res.send({
@@ -48,24 +77,20 @@ app.get('/weather', (req, res) => {
         })
     }
 
-    geocode(req.query.address, (error, { latitude, longitude, location } = {}) => {
+    forecastLocation(req.query.address, (error, data) => {
         if (error) {
             return res.send({ error })
         }
 
-        forecast(latitude, longitude, (error, forecastData) => {
-            if (error) {
-                return res.send({ error })
-            }
-
-            res.send({
-                forecast: forecastData,
-                location,
-                address: req.query.address
-            })
+        res.send({
+            forecast: data.forecastData,
+            location: data.location,
+            address: req.query.address
         })
     })
 })
+
+
 
 app.get('/products', (req, res) => {
     if (!req.query.search) {
@@ -83,7 +108,7 @@ app.get('/products', (req, res) => {
 app.get('/help/*', (req, res) => {
     res.render('404', {
         title: '404',
-        name: 'Andrew Mead',
+        name: 'Brent Liang',
         errorMessage: 'Help article not found.'
     })
 })
@@ -91,7 +116,7 @@ app.get('/help/*', (req, res) => {
 app.get('*', (req, res) => {
     res.render('404', {
         title: '404',
-        name: 'Andrew Mead',
+        name: 'Brent Liang',
         errorMessage: 'Page not found.'
     })
 })
